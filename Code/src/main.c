@@ -27,6 +27,7 @@ APB1 - 45
 #include <stdio.h>
 
 void ADIS_View(void);
+void L3GD20_View(void);
 
 static int GET_DATA = 0;
 
@@ -62,6 +63,7 @@ int main(){
 		if(GET_DATA){
 			k_fill(DISPLAY, COLOR_WHITE);
 			ADIS_View();
+			L3GD20_View();
 			GET_DATA = 0;
 		}
 	}
@@ -96,6 +98,21 @@ void ADIS_View(){
 	k_print_string(DISPLAY, str, 120, 60, 2, COLOR_BLUE);
 	sprintf(str, "az=%7.3f\n", z_acc);
 	k_print_string(DISPLAY, str, 120, 80, 2, COLOR_BLUE);
+}
+
+void L3GD20_View(){
+	int8_t BURST[7];
+	char str[25];
+	L3GD20_Burst(BURST);
+	double x_gir = ((BURST[2] << 8)|BURST[1])*0.07;
+	double y_gir = ((BURST[4] << 8)|BURST[3])*0.07;
+	double z_gir = ((BURST[6] << 8)|BURST[5])*0.07;
+	sprintf(str, "vx=%7.3f\n", x_gir);
+	k_print_string(DISPLAY, str, 0, 120, 2, COLOR_BLUE);
+	sprintf(str, "vx=%7.3f\n", y_gir);
+	k_print_string(DISPLAY, str, 0, 140, 2, COLOR_BLUE);
+	sprintf(str, "vx=%7.3f\n", z_gir);
+	k_print_string(DISPLAY, str, 0, 160, 2, COLOR_BLUE);
 }
 
 void TIM1_UP_TIM10_IRQHandler(void){
