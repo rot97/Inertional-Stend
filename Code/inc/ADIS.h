@@ -41,14 +41,4 @@
 
 void ADIS_Burst(int16_t*);
 
-void ADIS_view(void);
-
-void ADIS_table_view(int head);
-
-void ADIS_Hard_Reset(void);
-
-void ADIS_Soft_Reset(void);
-
-void ADIS_Init(void);
-
-uint16_t ADIS_Sample_Counter(void);
+int ADIS_Init(void);

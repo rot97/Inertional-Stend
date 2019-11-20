@@ -1,7 +1,7 @@
 .\objects\spi.o: Code\src\SPI.c
 .\objects\spi.o: .\CMSIS\inc\stm32f429xx.h
 .\objects\spi.o: .\CMSIS\inc\core_cm4.h
-.\objects\spi.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\spi.o: D:\P\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\spi.o: .\CMSIS\inc\cmsis_version.h
 .\objects\spi.o: .\CMSIS\inc\cmsis_compiler.h
 .\objects\spi.o: .\CMSIS\inc\cmsis_armcc.h
