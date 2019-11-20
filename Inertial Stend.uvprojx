@@ -416,6 +416,11 @@
               <FileType>1</FileType>
               <FilePath>.\Code\src\L3GD20.c</FilePath>
             </File>
+            <File>
+              <FileName>ADXL345.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Code\src\ADXL345.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

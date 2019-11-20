@@ -12,5 +12,6 @@
 .\objects\main.o: .\Code\inc\display.h
 .\objects\main.o: .\Code\inc\ADIS.h
 .\objects\main.o: .\Code\inc\L3GD20.h
+.\objects\main.o: .\Code\inc\ADXL345.h
 .\objects\main.o: .\Code\inc\SPI.h
 .\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

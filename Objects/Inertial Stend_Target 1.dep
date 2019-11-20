@@ -24,7 +24,7 @@ I (.\CMSIS\inc\cmsis_compiler.h)(0x5C9E793F)
 I (.\CMSIS\inc\cmsis_armcc.h)(0x5C9E793F)
 I (.\CMSIS\inc\mpu_armv7.h)(0x5C9E793F)
 I (.\CMSIS\inc\system_stm32f4xx.h)(0x5C9E793F)
-F (.\Code\src\main.c)(0x5DD5BABA)(--c99 --gnu -c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I .\CMSIS\inc -I .\Code\inc-I.\RTE\_Target_1-ID:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="525" -DSTM32F429xx-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (.\Code\src\main.c)(0x5DD5C829)(--c99 --gnu -c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I .\CMSIS\inc -I .\Code\inc-I.\RTE\_Target_1-ID:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="525" -DSTM32F429xx-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (.\CMSIS\inc\stm32f429xx.h)(0x5C9E793F)
 I (.\CMSIS\inc\core_cm4.h)(0x5C9E793F)
 I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F137E)
@@ -37,7 +37,8 @@ I (.\Code\inc\RCC.h)(0x5DA365FA)
 I (.\Code\inc\LTDC.h)(0x5DA36361)
 I (.\Code\inc\display.h)(0x5D9DDE44)
 I (.\Code\inc\ADIS.h)(0x5DD5A681)
-I (.\Code\inc\L3GD20.h)(0x5DD5C297)
+I (.\Code\inc\L3GD20.h)(0x5DD5C494)
+I (.\Code\inc\ADXL345.h)(0x5DD5C62C)
 I (.\Code\inc\SPI.h)(0x5DD5A984)
 I (D:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599F137C)
 F (.\Code\src\RCC.c)(0x5DA36361)(--c99 --gnu -c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I .\CMSIS\inc -I .\Code\inc-I.\RTE\_Target_1-ID:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="525" -DSTM32F429xx-o .\objects\rcc.o --omf_browse .\objects\rcc.crf --depend .\objects\rcc.d)
@@ -69,7 +70,18 @@ I (.\CMSIS\inc\cmsis_compiler.h)(0x5C9E793F)
 I (.\CMSIS\inc\cmsis_armcc.h)(0x5C9E793F)
 I (.\CMSIS\inc\mpu_armv7.h)(0x5C9E793F)
 I (.\CMSIS\inc\system_stm32f4xx.h)(0x5C9E793F)
-I (.\Code\inc\L3GD20.h)(0x5DD5C297)
+I (.\Code\inc\L3GD20.h)(0x5DD5C494)
+I (.\Code\inc\SPI.h)(0x5DD5A984)
+F (.\Code\src\ADXL345.c)(0x5DD5C7EC)(--c99 --gnu -c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I .\CMSIS\inc -I .\Code\inc-I.\RTE\_Target_1-ID:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="525" -DSTM32F429xx-o .\objects\adxl345.o --omf_browse .\objects\adxl345.crf --depend .\objects\adxl345.d)
+I (.\CMSIS\inc\stm32f429xx.h)(0x5C9E793F)
+I (.\CMSIS\inc\core_cm4.h)(0x5C9E793F)
+I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F137E)
+I (.\CMSIS\inc\cmsis_version.h)(0x5C9E793F)
+I (.\CMSIS\inc\cmsis_compiler.h)(0x5C9E793F)
+I (.\CMSIS\inc\cmsis_armcc.h)(0x5C9E793F)
+I (.\CMSIS\inc\mpu_armv7.h)(0x5C9E793F)
+I (.\CMSIS\inc\system_stm32f4xx.h)(0x5C9E793F)
+I (.\Code\inc\ADXL345.h)(0x5DD5C62C)
 I (.\Code\inc\SPI.h)(0x5DD5A984)
 F (.\CMSIS\src\system_stm32f4xx.c)(0x5C9E793F)(--c99 --gnu -c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I .\CMSIS\inc -I .\Code\inc-I.\RTE\_Target_1-ID:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="525" -DSTM32F429xx-o .\objects\system_stm32f4xx.o --omf_browse .\objects\system_stm32f4xx.crf --depend .\objects\system_stm32f4xx.d)
 I (D:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x5A8FD9B4)

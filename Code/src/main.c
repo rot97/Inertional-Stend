@@ -22,12 +22,14 @@ APB1 - 45
 #include "display.h"
 #include "ADIS.h"
 #include "L3GD20.h"
+#include "ADXL345.h"
 #include "SPI.h"
 
 #include <stdio.h>
 
 void ADIS_View(void);
 void L3GD20_View(void);
+void ADXL345_View(void);
 
 static int GET_DATA = 0;
 
@@ -54,8 +56,8 @@ int main(){
 	LTDC_Init();
 	
 	if(ADIS_Init()) ERROR();
-	
 	if(L3GD20_Init()) ERROR();
+	if(ADXL345_Init()) ERROR();
 	
 	TIM10_Init();
 
@@ -64,6 +66,7 @@ int main(){
 			k_fill(DISPLAY, COLOR_WHITE);
 			ADIS_View();
 			L3GD20_View();
+			ADXL345_View();
 			GET_DATA = 0;
 		}
 	}
@@ -109,10 +112,25 @@ void L3GD20_View(){
 	double z_gir = ((BURST[6] << 8)|BURST[5])*0.07;
 	sprintf(str, "vx=%7.3f\n", x_gir);
 	k_print_string(DISPLAY, str, 0, 120, 2, COLOR_BLUE);
-	sprintf(str, "vx=%7.3f\n", y_gir);
+	sprintf(str, "vy=%7.3f\n", y_gir);
 	k_print_string(DISPLAY, str, 0, 140, 2, COLOR_BLUE);
-	sprintf(str, "vx=%7.3f\n", z_gir);
+	sprintf(str, "vz=%7.3f\n", z_gir);
 	k_print_string(DISPLAY, str, 0, 160, 2, COLOR_BLUE);
+}
+
+void ADXL345_View(){
+	int8_t BURST[7];
+	char str[25];
+	ADXL345_Burst(BURST);
+	double x_acc = ((BURST[2] << 8)|BURST[1])*0.0078;
+	double y_acc = ((BURST[4] << 8)|BURST[3])*0.0078;
+	double z_acc = ((BURST[6] << 8)|BURST[5])*0.0078;
+	sprintf(str, "vx=%7.3f\n", x_acc);
+	k_print_string(DISPLAY, str, 120, 120, 2, COLOR_BLUE);
+	sprintf(str, "vy=%7.3f\n", y_acc);
+	k_print_string(DISPLAY, str, 120, 140, 2, COLOR_BLUE);
+	sprintf(str, "vz=%7.3f\n", z_acc);
+	k_print_string(DISPLAY, str, 120, 160, 2, COLOR_BLUE);
 }
 
 void TIM1_UP_TIM10_IRQHandler(void){
