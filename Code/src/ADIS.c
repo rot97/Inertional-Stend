@@ -6,7 +6,7 @@
 int ADIS_Init(){
 		SPI1_Init();
 		uint16_t ID = SPI1_Read(PROD_ID);
-		if(ID != ADIS_ID) return 16;
+		if(ID != ADIS_ID) return 1;
 		return 0;
 }
 

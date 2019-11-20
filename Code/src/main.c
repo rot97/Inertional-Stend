@@ -21,11 +21,12 @@ APB1 - 45
 #include "LTDC.h"
 #include "display.h"
 #include "ADIS.h"
+#include "L3GD20.h"
 #include "SPI.h"
 
 #include <stdio.h>
 
-void ADIS_View();
+void ADIS_View(void);
 
 static int GET_DATA = 0;
 
@@ -33,7 +34,7 @@ void TIM10_Init(){
 	RCC->APB2ENR |= RCC_APB2ENR_TIM10EN;
 	
 	TIM10->PSC = 180000-1;
-	TIM10->ARR = 500;
+	TIM10->ARR = 1000;
 	TIM10->DIER |= TIM_DIER_UIE;
 	TIM10->CR1 |= TIM_CR1_CEN;
 	
@@ -50,12 +51,16 @@ int main(){
 	RCC_Init();
 	MCO_Init();
 	LTDC_Init();
-	TIM10_Init();
-
+	
 	if(ADIS_Init()) ERROR();
+	
+	if(L3GD20_Init()) ERROR();
+	
+	TIM10_Init();
 
 	while(1){
 		if(GET_DATA){
+			k_fill(DISPLAY, COLOR_WHITE);
 			ADIS_View();
 			GET_DATA = 0;
 		}
@@ -66,7 +71,6 @@ void ADIS_View(){
 	int16_t BURST[7];
 	char str[25];
 	ADIS_Burst(BURST);
-	k_fill(DISPLAY, COLOR_WHITE);
 	k_print_string(DISPLAY, "ADIS:\n", 0, 0, 2, COLOR_BLUE);
 	
 	double tempature = 25 + BURST[0] / 70.0;
