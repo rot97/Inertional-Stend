@@ -87,13 +87,6 @@ void SPI5_Init(){
 	RCC->APB2ENR |= RCC_APB2ENR_SPI5EN;
 	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOFEN;
 	
-	//CS
-	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN;
-	GPIOC->MODER |= GPIO_MODER_MODE1_0;
-	GPIOC->MODER &= ~GPIO_MODER_MODE1_1;
-	GPIOC->OSPEEDR |= GPIO_OSPEEDER_OSPEEDR1_0 | GPIO_OSPEEDER_OSPEEDR1_1;
-	GPIOC->BSRR = GPIO_BSRR_BS1;
-	
 	//SKC
 	GPIOF->MODER |= GPIO_MODER_MODE7_1;
 	GPIOF->MODER &= ~GPIO_MODER_MODE7_0;
@@ -120,7 +113,7 @@ void SPI5_Init(){
 	SPI5->CR1 |= SPI_CR1_SSM;
 	SPI5->CR1 |= SPI_CR1_SSI;
 	SPI5->CR1 &= ~SPI_CR1_BR_Msk;
-	SPI5->CR1 |= 0b11 << SPI_CR1_BR_Pos;
+	SPI5->CR1 |= 0b100 << SPI_CR1_BR_Pos;
 	SPI5->CR1 |= SPI_CR1_MSTR;
 	SPI5->CR1 |= SPI_CR1_CPOL;
 	SPI5->CR1 |= SPI_CR1_CPHA;
@@ -130,20 +123,16 @@ void SPI5_Init(){
 
 uint8_t SPI5_Read(uint8_t reg){ 
     while(!(SPI5->SR & SPI_SR_TXE));
-		GPIOC->BSRR = GPIO_BSRR_BR1;
     SPI5->DR = ((reg | (1 << 7))<< 8) | 0xFF;
 		while(!(SPI5->SR & SPI_SR_TXE));	
     while(SPI5->SR & SPI_SR_BSY);
-		GPIOC->BSRR = GPIO_BSRR_BS1;
 		return (uint8_t)SPI5->DR;  
 }
 
 void SPI5_Write(uint8_t reg, uint8_t data){ 
-    while(!(SPI5->SR & SPI_SR_TXE));
-		GPIOC->BSRR = GPIO_BSRR_BR1;  
+    while(!(SPI5->SR & SPI_SR_TXE));  
 		SPI5->DR = (reg<< 8) | data;                            
     while(!(SPI5->SR & SPI_SR_TXE));
 		while(SPI5->SR & SPI_SR_BSY);
-		GPIOC->BSRR = GPIO_BSRR_BS1;
 		(void) SPI5->DR;
 }
