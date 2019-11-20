@@ -1,0 +1,10 @@
+.\objects\ltdc.o: Code\src\LTDC.c
+.\objects\ltdc.o: .\Code\inc\LTDC.h
+.\objects\ltdc.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\ltdc.o: .\CMSIS\inc\stm32f429xx.h
+.\objects\ltdc.o: .\CMSIS\inc\core_cm4.h
+.\objects\ltdc.o: .\CMSIS\inc\cmsis_version.h
+.\objects\ltdc.o: .\CMSIS\inc\cmsis_compiler.h
+.\objects\ltdc.o: .\CMSIS\inc\cmsis_armcc.h
+.\objects\ltdc.o: .\CMSIS\inc\mpu_armv7.h
+.\objects\ltdc.o: .\CMSIS\inc\system_stm32f4xx.h

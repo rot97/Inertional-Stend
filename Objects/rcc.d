@@ -1,0 +1,10 @@
+.\objects\rcc.o: Code\src\RCC.c
+.\objects\rcc.o: .\CMSIS\inc\stm32f429xx.h
+.\objects\rcc.o: .\CMSIS\inc\core_cm4.h
+.\objects\rcc.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\rcc.o: .\CMSIS\inc\cmsis_version.h
+.\objects\rcc.o: .\CMSIS\inc\cmsis_compiler.h
+.\objects\rcc.o: .\CMSIS\inc\cmsis_armcc.h
+.\objects\rcc.o: .\CMSIS\inc\mpu_armv7.h
+.\objects\rcc.o: .\CMSIS\inc\system_stm32f4xx.h
+.\objects\rcc.o: .\Code\inc\RCC.h
