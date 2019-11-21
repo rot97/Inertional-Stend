@@ -38,7 +38,7 @@ char ADIS_Res[125];
 char L3GD20_Res[125];
 char ADXL345_Res[125];
 
-int counters[5] = {10000, 5000, 2500, 1000, 500};
+int counters[7] = {10000, 5000, 2500, 1000, 500, 250, 100};
 int corrent_counter = 0;
 
 void TIM10_Init(){
@@ -82,6 +82,8 @@ int main(){
 	if(ADXL345_Init()) ERROR();
 	
 	TIM10_Init();
+	
+	char buf[20];
 
 	while(1){
 		if(GET_DATA){
@@ -95,6 +97,8 @@ int main(){
 			USART6_sentstr(L3GD20_Res);
 			USART6_sentstr("ADXL345:\r\n");
 			USART6_sentstr(ADXL345_Res);
+			sprintf(buf, "Samples: %d\n", 10000/counters[corrent_counter]);
+			k_print_string(DISPLAY, buf, 0, 200, 2, COLOR_BLUE);
 			GET_DATA = 0;
 		}
 	}
@@ -187,7 +191,7 @@ void TIM1_UP_TIM10_IRQHandler(void){
 void EXTI0_IRQHandler(void){
 	EXTI->PR |= EXTI_PR_PR0;
 	corrent_counter++;
-	if(corrent_counter  > 4) corrent_counter = 0;
+	if(corrent_counter  > 6) corrent_counter = 0;
 	TIM10->CR1 &= ~TIM_CR1_CEN;
 	TIM10->CNT = 0;
 	TIM10->ARR = counters[corrent_counter] - 1;
