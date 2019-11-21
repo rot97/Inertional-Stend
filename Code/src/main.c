@@ -24,6 +24,7 @@ APB1 - 45
 #include "L3GD20.h"
 #include "ADXL345.h"
 #include "SPI.h"
+#include "USART.h"
 
 #include <stdio.h>
 
@@ -32,12 +33,15 @@ void L3GD20_View(void);
 void ADXL345_View(void);
 
 static int GET_DATA = 0;
+char ADIS_Res[125];
+char L3GD20_Res[125];
+char ADXL345_Res[125];
 
 void TIM10_Init(){
 	RCC->APB2ENR |= RCC_APB2ENR_TIM10EN;
 	
-	TIM10->PSC = 180000-1;
-	TIM10->ARR = 200;
+	TIM10->PSC = 18000-1;
+	TIM10->ARR = 200-1;
 	TIM10->DIER |= TIM_DIER_UIE;
 	TIM10->CR1 |= TIM_CR1_CEN;
 	
@@ -54,6 +58,9 @@ int main(){
 	RCC_Init();
 	MCO_Init();
 	LTDC_Init();
+	USART6_Init();
+	
+	USART6_sentstr("Hello\r\n");
 	
 	if(ADIS_Init()) ERROR();
 	if(L3GD20_Init()) ERROR();
@@ -67,6 +74,12 @@ int main(){
 			ADIS_View();
 			L3GD20_View();
 			ADXL345_View();
+			USART6_sentstr("ADIS:\r\n");
+			USART6_sentstr(ADIS_Res);
+			USART6_sentstr("L3GD20:\r\n");
+			USART6_sentstr(L3GD20_Res);
+			USART6_sentstr("ADXL345:\r\n");
+			USART6_sentstr(ADXL345_Res);
 			GET_DATA = 0;
 		}
 	}
@@ -74,7 +87,7 @@ int main(){
 
 void ADIS_View(){
 	int16_t BURST[7];
-	char str[25];
+	char str[15];
 	ADIS_Burst(BURST);
 	k_print_string(DISPLAY, "ADIS:\n", 0, 0, 2, COLOR_BLUE);
 	
@@ -101,6 +114,8 @@ void ADIS_View(){
 	k_print_string(DISPLAY, str, 120, 60, 2, COLOR_BLUE);
 	sprintf(str, "az=%7.3f\n", z_acc);
 	k_print_string(DISPLAY, str, 120, 80, 2, COLOR_BLUE);
+	
+	sprintf(ADIS_Res, "vx = %7.3f vy = %7.3f vz = %7.3f ax = %7.3f ay = %7.3f az = %7.3f\r\n", x_gir, y_gir, z_gir, x_acc, y_acc, z_acc);
 }
 
 void L3GD20_View(){
@@ -116,6 +131,7 @@ void L3GD20_View(){
 	k_print_string(DISPLAY, str, 0, 140, 2, COLOR_BLUE);
 	sprintf(str, "vz=%7.3f\n", z_gir);
 	k_print_string(DISPLAY, str, 0, 160, 2, COLOR_BLUE);
+	sprintf(L3GD20_Res, "vx = %7.3f vy = %7.3f vz = %7.3f\r\n", x_gir, y_gir, z_gir);
 }
 
 void ADXL345_View(){
@@ -131,6 +147,7 @@ void ADXL345_View(){
 	k_print_string(DISPLAY, str, 120, 140, 2, COLOR_BLUE);
 	sprintf(str, "vz=%7.3f\n", z_acc);
 	k_print_string(DISPLAY, str, 120, 160, 2, COLOR_BLUE);
+	sprintf(ADXL345_Res, "ax = %7.3f ay = %7.3f az = %7.3f\r\n", x_acc, y_acc, z_acc);
 }
 
 void TIM1_UP_TIM10_IRQHandler(void){

@@ -1,6 +1,6 @@
 .\objects\ltdc.o: Code\src\LTDC.c
 .\objects\ltdc.o: .\Code\inc\LTDC.h
-.\objects\ltdc.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\ltdc.o: D:\P\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\ltdc.o: .\CMSIS\inc\stm32f429xx.h
 .\objects\ltdc.o: .\CMSIS\inc\core_cm4.h
 .\objects\ltdc.o: .\CMSIS\inc\cmsis_version.h

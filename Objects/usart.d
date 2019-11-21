@@ -1,0 +1,10 @@
+.\objects\usart.o: Code\src\USART.c
+.\objects\usart.o: .\CMSIS\inc\stm32f429xx.h
+.\objects\usart.o: .\CMSIS\inc\core_cm4.h
+.\objects\usart.o: D:\P\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\usart.o: .\CMSIS\inc\cmsis_version.h
+.\objects\usart.o: .\CMSIS\inc\cmsis_compiler.h
+.\objects\usart.o: .\CMSIS\inc\cmsis_armcc.h
+.\objects\usart.o: .\CMSIS\inc\mpu_armv7.h
+.\objects\usart.o: .\CMSIS\inc\system_stm32f4xx.h
+.\objects\usart.o: .\Code\inc\USART.h

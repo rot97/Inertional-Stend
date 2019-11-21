@@ -421,6 +421,11 @@
               <FileType>1</FileType>
               <FilePath>.\Code\src\ADXL345.c</FilePath>
             </File>
+            <File>
+              <FileName>USART.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Code\src\USART.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -1,7 +1,7 @@
 .\objects\adxl345.o: Code\src\ADXL345.c
 .\objects\adxl345.o: .\CMSIS\inc\stm32f429xx.h
 .\objects\adxl345.o: .\CMSIS\inc\core_cm4.h
-.\objects\adxl345.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\adxl345.o: D:\P\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\adxl345.o: .\CMSIS\inc\cmsis_version.h
 .\objects\adxl345.o: .\CMSIS\inc\cmsis_compiler.h
 .\objects\adxl345.o: .\CMSIS\inc\cmsis_armcc.h
