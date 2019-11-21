@@ -38,15 +38,28 @@ char ADIS_Res[125];
 char L3GD20_Res[125];
 char ADXL345_Res[125];
 
+int counters[5] = {10000, 5000, 2500, 1000, 500};
+int corrent_counter = 0;
+
 void TIM10_Init(){
 	RCC->APB2ENR |= RCC_APB2ENR_TIM10EN;
 	
 	TIM10->PSC = 18000-1;
-	TIM10->ARR = 1000-1;
+	TIM10->ARR = 10000-1;
 	TIM10->DIER |= TIM_DIER_UIE;
 	TIM10->CR1 |= TIM_CR1_CEN;
 	
 	NVIC_EnableIRQ(TIM1_UP_TIM10_IRQn);
+}
+
+void EXT0_Init(){
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+	GPIOA->MODER &= ~GPIO_MODER_MODE0_Msk;
+	EXTI->RTSR |= EXTI_RTSR_TR0;
+	EXTI->IMR |= EXTI_IMR_IM0;
+	SYSCFG->EXTICR[0] &= SYSCFG_EXTICR1_EXTI0_Msk; 
+	
+	NVIC_EnableIRQ(EXTI0_IRQn);
 }
 
 void ERROR(){
@@ -60,6 +73,7 @@ int main(){
 	MCO_Init();
 	LTDC_Init();
 	USART6_Init();
+	EXT0_Init();
 	
 	USART6_sentstr("Hello\r\n");
 	
@@ -165,11 +179,19 @@ int16_t median(int16_t a, int16_t b, int16_t c){
 	return m;
 }
 
-
-
 void TIM1_UP_TIM10_IRQHandler(void){
 	TIM10->SR &= ~TIM_SR_UIF;
 	GET_DATA = 1;
+}
+
+void EXTI0_IRQHandler(void){
+	EXTI->PR |= EXTI_PR_PR0;
+	corrent_counter++;
+	if(corrent_counter  > 4) corrent_counter = 0;
+	TIM10->CR1 &= ~TIM_CR1_CEN;
+	TIM10->CNT = 0;
+	TIM10->ARR = counters[corrent_counter] - 1;
+	TIM10->CR1 |= TIM_CR1_CEN;
 }
 
 
