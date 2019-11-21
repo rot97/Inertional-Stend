@@ -215,6 +215,14 @@ void k_print_string(uint16_t* display, char* str, int x, int y, int space, uint1
 	}
 }
 
+void k_print_string_invers(uint16_t* display, char* str, int x, int y, int length, uint16_t color){
+	int i =0;
+	while(str[++i] != '\n');
+	for(i--; i >= 0; i--){
+		k_printchar(display, A+ (str[i]-32)*55,  x + i*length, y, color);
+	}
+}
+
 void k_draw(uint16_t* display, int x, int y,  uint16_t color){
 	display[DISPLAY_WIDTH*y+x] = color;
 }

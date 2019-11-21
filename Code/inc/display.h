@@ -24,6 +24,8 @@ void k_print_string(uint16_t* display, char* str, int x, int y, int space, uint1
 void k_draw(uint16_t* display, int x, int y,  uint16_t color);
 
 void k_draw_line(uint16_t* display, int x1, int y1, int x2, int y2,  uint16_t color);
+
+void k_print_string_invers(uint16_t* display, char* str, int x, int y, int length, uint16_t color);
 /*
 
 	А	128
