@@ -41,6 +41,11 @@ char ADXL345_Res[125];
 int counters[7] = {10000, 5000, 2500, 1000, 500, 250, 100};
 int corrent_counter = 0;
 
+char samples_text[15] = {151, 168, 177, 171, 174, ' ', 174, 178, 177, 183, 165, 178, 174, 162};
+char speed_text[] = {145, 170, 174,176, 174, 177, 178, 188, ':', '\n'};
+char acc_text[] = {147, 177, 170, 174, 176, 165, 173, 168, 165, ':', '\n'};
+char temp_text[] = {146, 165, 172, 175, 165, 176,160, 178, 178, 179, 176, 160, ':', '\n'};
+
 void TIM10_Init(){
 	RCC->APB2ENR |= RCC_APB2ENR_TIM10EN;
 	
@@ -83,7 +88,7 @@ int main(){
 	
 	TIM10_Init();
 	
-	char buf[20];
+	char buf[30];
 
 	while(1){
 		if(GET_DATA){
@@ -97,8 +102,8 @@ int main(){
 			USART6_sentstr(L3GD20_Res);
 			USART6_sentstr("ADXL345:\r\n");
 			USART6_sentstr(ADXL345_Res);
-			sprintf(buf, "Samples: %d\n", 10000/counters[corrent_counter]);
-			k_print_string(DISPLAY, buf, 0, 200, 2, COLOR_BLUE);
+			sprintf(buf, "%s: %d\n", samples_text, 10000/counters[corrent_counter]);
+			k_print_string(DISPLAY, buf, 0, 300, 2, COLOR_BLUE);
 			GET_DATA = 0;
 		}
 	}
@@ -114,28 +119,32 @@ void ADIS_View(){
 	k_print_string(DISPLAY, "ADIS:\n", 0, 0, 2, COLOR_BLUE);
 	
 	double tempature = 25 + median(BURST[0][0], BURST[1][0], BURST[2][0]) / 70.0;
+	k_print_string(DISPLAY, temp_text, 0, 20, 2, COLOR_BLUE);
 	sprintf(str, "t0=%5.2f\n", tempature);
-	k_print_string(DISPLAY, str, 0, 20, 2, COLOR_BLUE);
-			
+	k_print_string(DISPLAY, str, 150, 20, 2, COLOR_BLUE);
+	
+	k_print_string(DISPLAY, speed_text, 0, 40, 2, COLOR_BLUE);
+	k_print_string(DISPLAY, acc_text, 120, 40, 2, COLOR_BLUE);
+	
 	double x_gir = median(BURST[0][1], BURST[1][1], BURST[2][1]) * 0.005;
 	double y_gir = median(BURST[0][2], BURST[1][2], BURST[2][2]) * 0.005;
 	double z_gir = median(BURST[0][3], BURST[1][3], BURST[2][3]) * 0.005;
 	sprintf(str, "vx=%7.3f\n", x_gir);
-	k_print_string_invers(DISPLAY, str, 0, 40, 10, COLOR_BLUE);
-	sprintf(str, "vy=%7.3f\n", y_gir);
 	k_print_string_invers(DISPLAY, str, 0, 60, 10, COLOR_BLUE);
-	sprintf(str, "vz=%7.3f\n", z_gir);
+	sprintf(str, "vy=%7.3f\n", y_gir);
 	k_print_string_invers(DISPLAY, str, 0, 80, 10, COLOR_BLUE);
+	sprintf(str, "vz=%7.3f\n", z_gir);
+	k_print_string_invers(DISPLAY, str, 0, 100, 10, COLOR_BLUE);
 		
 	double x_acc = median(BURST[0][4], BURST[1][4], BURST[2][4])  * 0.0005;
 	double y_acc = median(BURST[0][5], BURST[1][5], BURST[2][5]) * 0.0005;
 	double z_acc = median(BURST[0][6], BURST[1][6], BURST[2][6]) * 0.0005;
 	sprintf(str, "ax=%7.3f\n", x_acc);
-	k_print_string_invers(DISPLAY, str, 120, 40, 10, COLOR_BLUE);
-	sprintf(str, "ay=%7.3f\n", y_acc);
 	k_print_string_invers(DISPLAY, str, 120, 60, 10, COLOR_BLUE);
-	sprintf(str, "az=%7.3f\n", z_acc);
+	sprintf(str, "ay=%7.3f\n", y_acc);
 	k_print_string_invers(DISPLAY, str, 120, 80, 10, COLOR_BLUE);
+	sprintf(str, "az=%7.3f\n", z_acc);
+	k_print_string_invers(DISPLAY, str, 120, 100, 10, COLOR_BLUE);
 	
 	sprintf(ADIS_Res, "vx = %7.3f vy = %7.3f vz = %7.3f ax = %7.3f ay = %7.3f az = %7.3f\r\n", x_gir, y_gir, z_gir, x_acc, y_acc, z_acc);
 }
@@ -149,12 +158,14 @@ void L3GD20_View(){
 	double x_gir = median(((BURST[0][2] << 8)|BURST[0][1]), ((BURST[1][2] << 8)|BURST[1][1]),((BURST[2][2] << 8)|BURST[2][1]))*0.07;
 	double y_gir = median(((BURST[0][4] << 8)|BURST[0][3]), ((BURST[1][4] << 8)|BURST[1][3]),((BURST[2][4] << 8)|BURST[2][3]))*0.07;
 	double z_gir = median(((BURST[0][6] << 8)|BURST[0][5]), ((BURST[1][6] << 8)|BURST[1][5]),((BURST[2][6] << 8)|BURST[2][5]))*0.07;
+	k_print_string(DISPLAY, "L3GD20\n", 0, 180, 2, COLOR_BLUE);
+	k_print_string(DISPLAY, speed_text, 0, 200, 2, COLOR_BLUE);
 	sprintf(str, "vx=%7.3f\n", x_gir);
-	k_print_string_invers(DISPLAY, str, 0, 120, 10, COLOR_BLUE);
+	k_print_string_invers(DISPLAY, str, 0, 220, 10, COLOR_BLUE);
 	sprintf(str, "vy=%7.3f\n", y_gir);
-	k_print_string_invers(DISPLAY, str, 0, 140, 10, COLOR_BLUE);
+	k_print_string_invers(DISPLAY, str, 0, 240, 10, COLOR_BLUE);
 	sprintf(str, "vz=%7.3f\n", z_gir);
-	k_print_string_invers(DISPLAY, str, 0, 160, 10, COLOR_BLUE);
+	k_print_string_invers(DISPLAY, str, 0, 260, 10, COLOR_BLUE);
 	sprintf(L3GD20_Res, "vx = %7.3f vy = %7.3f vz = %7.3f\r\n", x_gir, y_gir, z_gir);
 }
 
@@ -167,12 +178,14 @@ void ADXL345_View(){
 	double x_acc = median(((BURST[0][2] << 8)|BURST[0][1]), ((BURST[1][2] << 8)|BURST[1][1]),((BURST[2][2] << 8)|BURST[2][1]))*0.0078;
 	double y_acc = median(((BURST[0][4] << 8)|BURST[0][3]), ((BURST[1][4] << 8)|BURST[1][3]),((BURST[2][4] << 8)|BURST[2][3]))*0.0078;
 	double z_acc = median(((BURST[0][6] << 8)|BURST[0][5]), ((BURST[1][6] << 8)|BURST[1][5]),((BURST[2][6] << 8)|BURST[2][5]))*0.0078;
+	k_print_string(DISPLAY, "ADXL345\n", 120, 180, 2, COLOR_BLUE);
+	k_print_string(DISPLAY, acc_text, 120, 200, 2, COLOR_BLUE);
 	sprintf(str, "ax=%7.3f\n", x_acc);
-	k_print_string_invers(DISPLAY, str, 120, 120, 10, COLOR_BLUE);
+	k_print_string_invers(DISPLAY, str, 120, 220, 10, COLOR_BLUE);
 	sprintf(str, "ay=%7.3f\n", y_acc);
-	k_print_string_invers(DISPLAY, str, 120, 140, 10, COLOR_BLUE);
+	k_print_string_invers(DISPLAY, str, 120, 240, 10, COLOR_BLUE);
 	sprintf(str, "az=%7.3f\n", z_acc);
-	k_print_string_invers(DISPLAY, str, 120, 160, 10, COLOR_BLUE);
+	k_print_string_invers(DISPLAY, str, 120, 260, 10, COLOR_BLUE);
 	sprintf(ADXL345_Res, "ax = %7.3f ay = %7.3f az = %7.3f\r\n", x_acc, y_acc, z_acc);
 }
 
